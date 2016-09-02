@@ -19,7 +19,7 @@ class PlantUmlBlockProcessor(markdown.blockprocessors.BlockProcessor):
         while blocks:
             text += blocks.pop(0)
 
-        plant = plantuml.PlantUML('http://plantuml/planuml/')
+        plant = plantuml.PlantUML()
         imageurl = plant.get_url(text)
 
         etree.SubElement(parent, 'img', src=imageurl)
