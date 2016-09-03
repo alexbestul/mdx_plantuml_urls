@@ -25,4 +25,4 @@ def test_happypath():
     output = markdown.markdown(text, extensions=[PlantUmlUrlExtension()])
 
     #Assert
-    assert output == '<img src="http://www.plantuml.com/plantuml/img/SoWkIImgAStDuN98pKi1qG00" />'
+    assert output == '<img src="http://www.plantuml.com/plantuml/img/SoWkIImgAStDuN98pKi1qLm0" />'
