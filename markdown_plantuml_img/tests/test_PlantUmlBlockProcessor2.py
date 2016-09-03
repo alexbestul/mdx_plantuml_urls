@@ -2,6 +2,7 @@ import mock
 import pytest
 from markdown_plantuml_img import PlantUmlBlockProcessor
 import textwrap
+import plantuml
 
 def test_givensimplepleumlblock_collect_blocks_returnsentireblock():
     # Arrange
@@ -66,6 +67,29 @@ def test_giventextafterplantumlblock_collect_blocks_returnsonlyuml():
 
     # Assert
     assert result == plantuml_text
+
+def test_whenplanturlisnotsupplied_defaultplantumlurlisused():
+    # Arrange
+    bp = PlantUmlBlockProcessor(mock.Mock())
+
+    # Act
+    plant = bp.get_plant_instance()
+
+    # Assert
+    assert plant.url == plantuml.SERVER_URL
+
+def test_whenplanturlissupplied_suppliedurlisused():
+    # Arrange
+    planturl = 'http://my_plant_server.localhost.org/plant/'
+    bp = PlantUmlBlockProcessor(mock.Mock())
+    bp.planturl = planturl
+
+    # Act
+    plant = bp.get_plant_instance()
+
+    # Assert
+    assert plant.url == planturl
+
 
 
 def to_blocks(text):

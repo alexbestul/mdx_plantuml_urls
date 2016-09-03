@@ -8,11 +8,24 @@ def makeExtension(*args, **kwargs):
     return PlantUmlUrlExtension(*args, **kwargs)
 
 class PlantUmlUrlExtension(Extension):
+
+    def __init__(self, *args, **kwargs):
+        self.config = {
+            'planturl': ["", "Base URL of the PlantUML server."],
+        }
+
+        super(PlantUmlUrlExtension, self).__init__(*args, **kwargs)
+
     def extendMarkdown(self, md, md_globals):
         blockprocessor = PlantUmlBlockProcessor(md.parser)
+        blockprocessor.planturl = self.getConfig('planturl')
         md.parser.blockprocessors.add('markdown_plantuml_img', blockprocessor, '>code')
 
 class PlantUmlBlockProcessor(markdown.blockprocessors.BlockProcessor):
+
+    def __init__(self, *args, **kwargs):
+        self.planturl = ''
+        super(PlantUmlBlockProcessor, self).__init__(*args, **kwargs)
 
     def test(self, parent, block):
         return block.startswith('@startuml')
@@ -20,10 +33,16 @@ class PlantUmlBlockProcessor(markdown.blockprocessors.BlockProcessor):
     def run(self, parent, blocks):
         text = self.collect_blocks(blocks)
 
-        plant = plantuml.PlantUML()
+        plant = self.get_plant_instance()
         imageurl = plant.get_url(text)
 
         etree.SubElement(parent, 'img', src=imageurl)
+
+    def get_plant_instance(self):
+        if self.planturl:
+            return plantuml.PlantUML(self.planturl)
+        else:
+            return plantuml.PlantUML()
 
     def collect_blocks(self, blocks):
         current_block = blocks.pop(0)

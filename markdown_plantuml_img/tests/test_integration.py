@@ -26,3 +26,19 @@ def test_happypath():
 
     #Assert
     assert output == '<img src="http://www.plantuml.com/plantuml/img/SoWkIImgAStDuN98pKi1qLm0" />'
+
+
+def test_config_server_url():
+    # Arrange
+    text = textwrap.dedent('''\
+        @startuml
+        @enduml
+    ''')
+    server_url = 'http://my_plant_server.localhost.com/plantuml/'
+    expected_output = '<img src="{0}SoWkIImgAStDuN98pKi1qLm0" />'.format(server_url)
+
+    # Act
+    html = markdown.markdown(text, extensions=[PlantUmlUrlExtension(planturl=server_url)])
+
+    # Assert
+    assert html == expected_output
