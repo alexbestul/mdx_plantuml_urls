@@ -3,6 +3,10 @@ import markdown
 from markdown.extensions import Extension
 from markdown.util import etree
 
+
+def makeExtension(*args, **kwargs):
+    return PlantUmlUrlExtension(*args, **kwargs)
+
 class PlantUmlUrlExtension(Extension):
     def extendMarkdown(self, md, md_globals):
         blockprocessor = PlantUmlBlockProcessor(md.parser)
