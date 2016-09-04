@@ -18,10 +18,16 @@ class PlantUmlUrlExtension(Extension):
         super(PlantUmlUrlExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
+        blockprocessor = self.createBlockprocessor(md)
+        md.parser.blockprocessors.add('markdown_plantuml_img', blockprocessor, '>code')
+
+    def createBlockprocessor(self, md):
         blockprocessor = PlantUmlBlockProcessor(md.parser)
         blockprocessor.planturl = self.getConfig('planturl')
         blockprocessor.skinparam = self.getConfig('default_skinparam')
-        md.parser.blockprocessors.add('markdown_plantuml_img', blockprocessor, '>code')
+
+        return blockprocessor
+
 
 class PlantUmlBlockProcessor(markdown.blockprocessors.BlockProcessor):
 

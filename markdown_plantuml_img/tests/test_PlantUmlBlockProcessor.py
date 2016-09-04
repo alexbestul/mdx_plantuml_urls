@@ -1,6 +1,8 @@
 import mock
 import pytest
+from pytest_mock import mocker
 from markdown_plantuml_img import PlantUmlBlockProcessor
+from markdown_plantuml_img import PlantUmlUrlExtension
 
 def test_whenblockexactlymatchesstartumltoken_testreturnstrue():
     # Arrange
@@ -35,3 +37,56 @@ def test_whenblockcontainsextratextafterstartumltoken_testreturnstrue():
 
     # Assert
     assert result == True
+
+def test_blockprocessor_is_added_via_createBlockprocessor(mocker):
+    # Arrange
+    extension = PlantUmlUrlExtension()
+    fakeBlockprocessor = mock.Mock()
+
+    mocker.patch.object(extension, 'createBlockprocessor')
+    extension.createBlockprocessor.return_value = fakeBlockprocessor
+
+    md = mock.Mock()
+
+    # Act
+    extension.extendMarkdown(md, None)
+
+    # Assert
+    md.parser.blockprocessors.add.assert_called_with('markdown_plantuml_img', fakeBlockprocessor, '>code')
+
+def test_createBlockprocessordefaultvalues():
+    # Arrange
+    planturl = 'my_custom_planturl'
+    extension = PlantUmlUrlExtension()
+    md = mock.Mock()
+
+    # Act
+    blockprocessor = extension.createBlockprocessor(md)
+
+    # Assert
+    assert blockprocessor.planturl == ''
+    assert blockprocessor.skinparam == ''
+
+def test_whenplanturlissuppliedtoextension_planturlissetonblockprocessor():
+    # Arrange
+    planturl = 'my_custom_planturl'
+    extension = PlantUmlUrlExtension(planturl=planturl)
+    md = mock.Mock()
+
+    # Act
+    blockprocessor = extension.createBlockprocessor(md)
+
+    # Assert
+    assert blockprocessor.planturl == planturl
+
+def test_whenskinparamissuppliedtoextension_skinparamissetonblockprocessor():
+    # Arrange
+    skinparam = 'my_custom_skinparam'
+    extension = PlantUmlUrlExtension(default_skinparam=skinparam)
+    md = mock.Mock()
+
+    # Act
+    blockprocessor = extension.createBlockprocessor(md)
+
+    # Assert
+    assert blockprocessor.skinparam == skinparam
