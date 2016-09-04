@@ -3,7 +3,6 @@ import markdown
 from markdown.extensions import Extension
 from markdown.util import etree
 
-
 def makeExtension(*args, **kwargs):
     return PlantUmlUrlExtension(*args, **kwargs)
 
@@ -11,8 +10,8 @@ class PlantUmlUrlExtension(Extension):
 
     def __init__(self, *args, **kwargs):
         self.config = {
-            'planturl': ["", "Base URL of the PlantUML server."],
-            'default_skinparam': ["", "Skinparam to be applied to all diagrams."]
+            'planturl': ['', 'Base URL of the PlantUML server.'],
+            'default_skinparam': ['', 'Skinparam to be applied to all diagrams.']
         }
 
         super(PlantUmlUrlExtension, self).__init__(*args, **kwargs)
@@ -27,7 +26,6 @@ class PlantUmlUrlExtension(Extension):
         blockprocessor.skinparam = self.getConfig('default_skinparam')
 
         return blockprocessor
-
 
 class PlantUmlBlockProcessor(markdown.blockprocessors.BlockProcessor):
 
