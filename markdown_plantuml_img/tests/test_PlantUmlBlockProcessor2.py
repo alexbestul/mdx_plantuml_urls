@@ -90,6 +90,38 @@ def test_whenplanturlissupplied_suppliedurlisused():
     # Assert
     assert plant.url == planturl
 
+def test_whendefaultskinparamissupplied_itisinsertedafterthestartumltoken():
+    # Arrange
+    skinparam = textwrap.dedent('''\
+        skinparam monochrome true
+        skinparam handwritten true''')
+
+    text = textwrap.dedent('''\
+        @startuml
+
+        bob -> alice
+
+        @enduml''')
+
+    expected_output = textwrap.dedent('''\
+        @startuml
+        skinparam monochrome true
+        skinparam handwritten true
+
+        bob -> alice
+
+        @enduml''')
+
+    bp = PlantUmlBlockProcessor(mock.Mock())
+    bp.skinparam = skinparam
+
+    # Act
+    result = bp.collect_blocks(to_blocks(text))
+
+    # Assert
+    assert result == expected_output
+
+
 
 
 def to_blocks(text):

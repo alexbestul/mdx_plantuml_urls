@@ -12,6 +12,7 @@ class PlantUmlUrlExtension(Extension):
     def __init__(self, *args, **kwargs):
         self.config = {
             'planturl': ["", "Base URL of the PlantUML server."],
+            'default_skinparam': ["", "Skinparam to be applied to all diagrams."]
         }
 
         super(PlantUmlUrlExtension, self).__init__(*args, **kwargs)
@@ -19,12 +20,14 @@ class PlantUmlUrlExtension(Extension):
     def extendMarkdown(self, md, md_globals):
         blockprocessor = PlantUmlBlockProcessor(md.parser)
         blockprocessor.planturl = self.getConfig('planturl')
+        blockprocessor.skinparam = self.getConfig('default_skinparam')
         md.parser.blockprocessors.add('markdown_plantuml_img', blockprocessor, '>code')
 
 class PlantUmlBlockProcessor(markdown.blockprocessors.BlockProcessor):
 
     def __init__(self, *args, **kwargs):
         self.planturl = ''
+        self.skinparam = ''
         super(PlantUmlBlockProcessor, self).__init__(*args, **kwargs)
 
     def test(self, parent, block):
@@ -47,6 +50,9 @@ class PlantUmlBlockProcessor(markdown.blockprocessors.BlockProcessor):
     def collect_blocks(self, blocks):
         current_block = blocks.pop(0)
         text = current_block
+
+        if (self.skinparam):
+            text += '\n' + self.skinparam
 
         while blocks and not current_block.startswith('@enduml'):
             current_block = blocks.pop(0)
