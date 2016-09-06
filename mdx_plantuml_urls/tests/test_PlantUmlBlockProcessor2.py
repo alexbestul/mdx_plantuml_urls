@@ -1,6 +1,6 @@
 import mock
 import pytest
-from markdown_plantuml_img import PlantUmlBlockProcessor
+from mdx_plantuml_urls import PlantUmlBlockProcessor
 import textwrap
 import plantuml
 

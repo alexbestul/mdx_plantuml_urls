@@ -1,5 +1,5 @@
 import pytest
-from markdown_plantuml_img import PlantUmlUrlExtension
+from mdx_plantuml_urls import PlantUmlUrlExtension
 import markdown
 import textwrap
 

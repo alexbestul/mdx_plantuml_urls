@@ -1,8 +1,8 @@
 import mock
 import pytest
 from pytest_mock import mocker
-from markdown_plantuml_img import PlantUmlBlockProcessor
-from markdown_plantuml_img import PlantUmlUrlExtension
+from mdx_plantuml_urls import PlantUmlBlockProcessor
+from mdx_plantuml_urls import PlantUmlUrlExtension
 
 def test_whenblockexactlymatchesstartumltoken_testreturnstrue():
     # Arrange
