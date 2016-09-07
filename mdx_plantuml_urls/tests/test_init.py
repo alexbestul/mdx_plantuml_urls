@@ -6,10 +6,10 @@ def test_load_extension_as_object():
     markdown.markdown('', extensions=[PlantUmlUrlExtension()])
 
 def test_load_extension_using_string():
-    markdown.markdown('', extensions=['plantuml_img'])
+    markdown.markdown('', extensions=['plantuml_urls'])
 
 def test_load_extension_using_short_string():
-        markdown.markdown('', extensions=['mdx_plantuml_img'])
+        markdown.markdown('', extensions=['mdx_plantuml_urls'])
 
 def test_config_server_url():
     # Arrange
