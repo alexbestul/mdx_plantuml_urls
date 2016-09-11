@@ -23,4 +23,7 @@ setup(
     tests_require=['pytest', 'mock', 'pytest-mock'],
     test_suite = "not None",  # Without it, run_tests is not called.
     cmdclass = {'test': PyTest},
+    author = 'alexbestul',
+    author_email = 'alexbestul@users.noreply.github.com',
+    url = 'https://github.com/alexbestul/mdx_plantuml_urls'
 )
