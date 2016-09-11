@@ -5,3 +5,14 @@ python:
 script: make test
 before_install:
 - pip install --upgrade pytest
+deploy:
+  provider: pypi
+  distributions: sdist
+  server: https://testpypi.python.org/pypi
+  user: alexbestul
+  password:
+    secure: lRaypX2NDe8yCiSUmJTGPO4jR5T1c9oD3qQ2t+rkv1A/G1Tmh2C46Inaz1gWph0kH82gc04KpTiZIx6TXwKMmRzYAQDlS+V1+rRsbvCOvtE76/SFeuujX3CtsHqnqT1QTCZ198i52WxZ4uLw0Id7FMNDZ7j+lwmbq6/H5jzaaSKZnlt83774338+5ZBTSu7uzP3beIgCkkRWWMZw0mjlT1XgmNYYGjQNKA0XGzIXQqoa8mWC+52TmcHL93qZbW3KnluLsXWKhvcSX0VUDIZPMo2GsCOl8qpDNFTZVUYXVrhFuu2j56QREcmGVygV+6uMjqtwbbf3ICM1vd+zT0tE8/mxqvHaLWJ+KvJfXZXPC1igYx8BMXyASbj24mFlJM9kxgPt33mQWMfLJ185h9b7PV1Ai7kpzDOFFCDkQgvJXgpTUgQT7qvCW0R+d/D+Bzf2FZnTEWKjbk1LIXrKkXIpedVzrTQVSlc19IV79XwqLCvv/6vemZ/0uhw5uJDQV37RkQoE3fR/wGKQ78dY9d5AG8IbSEO9kilGBeu1D6ulHjGBLxUUoTTmi4HmLveuJFzglalBzj4i0EtRajWNfquUF5LLjwv+HWR0yNAxlU2GalgjIqQtcyvktXwSDdsm8yRYbcQ7fT3Z90KuNdauLkxzgxsbW3lY6wzcZfTlLX9A4hk=
+  on:
+    branch: master
+    tags: false
+    condition: $TRAVIS_PYTHON_VERSION = "2.7"
