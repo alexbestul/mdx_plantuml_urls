@@ -32,7 +32,7 @@ setup(
     version=get_version(),
     setup_requires=['plantuml', 'markdown'],
     tests_require=['pytest', 'mock', 'pytest-mock'],
-    test_suite = "not None",  # Without it, run_tests is not called.
+    test_suite = 'not None',  # Without it, run_tests is not called.
     cmdclass = {'test': PyTest},
     author = 'alexbestul',
     author_email = 'alexbestul@users.noreply.github.com',
