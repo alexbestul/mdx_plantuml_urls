@@ -1,4 +1,5 @@
 import sys
+import datetime
 from setuptools import setup
 from setuptools.command.test import test as TestCommand
 
@@ -16,9 +17,19 @@ class PyTest(TestCommand):
         errno = pytest.main(self.pytest_args)
         sys.exit(errno)
 
+def get_version():
+    with open('VERSION', 'rb') as f:
+        pkg_version = f.read().strip()
+
+    timestamp = datetime.datetime.now().strftime('%y%m%d%H%M%S')
+    build_version = '{0}.{1}'.format(pkg_version, timestamp)
+
+    return build_version
+
+
 setup(
     name='mdx_plantuml_urls',
-    version='0.1',
+    version=get_version(),
     setup_requires=['plantuml', 'markdown'],
     tests_require=['pytest', 'mock', 'pytest-mock'],
     test_suite = "not None",  # Without it, run_tests is not called.
