@@ -19,12 +19,7 @@ class PyTest(TestCommand):
 
 def get_version():
     with open('VERSION', 'rb') as f:
-        pkg_version = f.read().strip()
-
-    timestamp = datetime.datetime.now().strftime('%y%m%d%H%M%S')
-    build_version = '{0}.{1}'.format(pkg_version, timestamp)
-
-    return build_version
+        return f.read().strip()
 
 
 setup(
