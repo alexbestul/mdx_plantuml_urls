@@ -24,8 +24,9 @@ def get_version():
 
 setup(
     name='mdx_plantuml_urls',
+    py_modules=['mdx_plantuml_urls'],
     version=get_version(),
-    setup_requires=['plantuml', 'markdown'],
+    install_requires=['plantuml', 'markdown'],
     tests_require=['pytest', 'mock', 'pytest-mock'],
     test_suite = 'not None',  # Without it, run_tests is not called.
     cmdclass = {'test': PyTest},
